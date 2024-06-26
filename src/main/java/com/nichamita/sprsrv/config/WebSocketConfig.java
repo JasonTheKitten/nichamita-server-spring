@@ -9,7 +9,7 @@ import org.springframework.web.reactive.HandlerMapping;
 import org.springframework.web.reactive.handler.SimpleUrlHandlerMapping;
 import org.springframework.web.reactive.socket.WebSocketHandler;
 
-import com.nichamita.sprsrv.websocket.GatewayWebsocketHandler;
+import com.nichamita.sprsrv.websocket.gateway.GatewayWebsocketHandler;
 
 import reactor.util.Loggers;
 

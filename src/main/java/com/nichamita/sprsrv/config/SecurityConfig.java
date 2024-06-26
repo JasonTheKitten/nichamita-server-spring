@@ -13,6 +13,7 @@ public class SecurityConfig  {
 
     @Bean
     public SecurityWebFilterChain filterChain(ServerHttpSecurity http) throws Exception {
+        http.csrf(customizer -> customizer.disable());
         http.authorizeExchange(exchanges -> exchanges
             .anyExchange().permitAll());
         http.cors(spec -> spec.configurationSource(request -> {
@@ -22,6 +23,7 @@ public class SecurityConfig  {
             cors.addAllowedHeader("*");
             return cors;
         }));
+        
         return http.build();
     }
 
