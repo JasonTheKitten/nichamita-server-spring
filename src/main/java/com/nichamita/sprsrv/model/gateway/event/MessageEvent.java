@@ -1,6 +1,8 @@
 package com.nichamita.sprsrv.model.gateway.event;
 
-public record MessageEvent(String message) implements GatewayEvent {
+import com.nichamita.sprsrv.model.entity.MessageEntity;
+
+public record MessageEvent(MessageEntity message) implements GatewayEvent {
  
     @Override
     public String type() {

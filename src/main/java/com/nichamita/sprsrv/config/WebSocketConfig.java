@@ -18,7 +18,7 @@ public class WebSocketConfig {
 
     @Bean
     public HandlerMapping handlerMapping(GatewayWebsocketHandler gatewayWebsocketHandler) {
-        Loggers.getLogger(getClass()).info("Creating handler mapping");
+        Loggers.getLogger(getClass()).debug("Creating handler mapping");
         Map<String, WebSocketHandler> paths = new HashMap<>();
         paths.put("/gateway", gatewayWebsocketHandler);
 

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nichamita.sprsrv.model.entity.MessageEntity;
 import com.nichamita.sprsrv.model.gateway.event.MessageEvent;
 import com.nichamita.sprsrv.model.rest.request.MessageSendRequest;
 import com.nichamita.sprsrv.service.gateway.GatewayService;
@@ -31,7 +32,9 @@ public class MessageRoute {
     @PostMapping
     public Mono<Void> postMessage(@RequestBody MessageSendRequest messageSendRequest) {
         log.debug("Received message: " + messageSendRequest.message());
-        MessageEvent messageEvent = new MessageEvent(messageSendRequest.message());
+        MessageEvent messageEvent = new MessageEvent(new MessageEntity(
+            messageSendRequest.message(),
+            System.currentTimeMillis()));
         return Flux.fromIterable(gatewayService.sessions().collect())
             .flatMap(session -> session.emit(messageEvent))
             .then();

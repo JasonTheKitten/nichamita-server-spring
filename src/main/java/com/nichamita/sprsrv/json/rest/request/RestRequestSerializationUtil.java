@@ -11,7 +11,7 @@ import dev.mccue.json.Json;
 public final class RestRequestSerializationUtil {
 
     private static final Map<Class<? extends RestRequest>, JsonDeserializer<? extends RestRequest>> deserializers = Map.ofEntries(
-        Map.entry(MessageSendRequest.class, new MessageSendRequestSerializer())
+        Map.entry(MessageSendRequest.class, MessageSendRequestSerializer::deserialize)
     );
     
     private RestRequestSerializationUtil() {}

@@ -1,7 +1,5 @@
 package com.nichamita.sprsrv.websocket.gateway.imp;
 
-import java.time.Duration;
-
 import org.springframework.web.reactive.socket.WebSocketSession;
 
 import com.nichamita.sprsrv.json.gateway.event.GatewayEventSerializationUtil;
@@ -40,7 +38,7 @@ public class GatewaySessionImp implements GatewaySession {
             this.sink = sink;
         }).map(event -> {
             String json = GatewayEventSerializationUtil.serialize(event).toString();
-            Loggers.getLogger(getClass()).info("Emitting event: " + json);
+            Loggers.getLogger(getClass()).debug("Emitting event: " + json);
             return  session.textMessage(json);
         }))
         .doFinally(signalType -> {
