@@ -34,7 +34,8 @@ public class MessageRoute {
         log.debug("Received message: " + messageSendRequest.message());
         MessageEvent messageEvent = new MessageEvent(new MessageEntity(
             messageSendRequest.message(),
-            System.currentTimeMillis()));
+            System.currentTimeMillis(),
+            Math.random() > 0.5 ? 1 : 2));
         return Flux.fromIterable(gatewayService.sessions().collect())
             .flatMap(session -> session.emit(messageEvent))
             .then();

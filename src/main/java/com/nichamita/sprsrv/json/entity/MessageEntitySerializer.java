@@ -12,6 +12,7 @@ public final class MessageEntitySerializer {
         return Json.objectBuilder()
             .put("text", object.text())
             .put("createdAt", object.createdAt())
+            .put("authorId", object.authorId())
             .build();
     }
     
