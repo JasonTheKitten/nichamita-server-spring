@@ -32,8 +32,12 @@ public class MessageRoute {
     @PostMapping
     public Mono<Void> postMessage(@RequestBody MessageSendRequest messageSendRequest) {
         log.debug("Received message: " + messageSendRequest.message());
+        String message = messageSendRequest.message().trim();
+        if (message.isEmpty()) {
+            return Mono.error(new IllegalArgumentException("Message cannot be empty"));
+        }
         MessageEvent messageEvent = new MessageEvent(new MessageEntity(
-            messageSendRequest.message(),
+            message,
             System.currentTimeMillis(),
             Math.random() > 0.5 ? 1 : 2));
         return Flux.fromIterable(gatewayService.sessions().collect())
