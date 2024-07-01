@@ -3,6 +3,7 @@ package com.nichamita.sprsrv.json.rest.request;
 import java.util.Map;
 
 import com.nichamita.sprsrv.json.JsonDeserializer;
+import com.nichamita.sprsrv.model.rest.request.LoginRequest;
 import com.nichamita.sprsrv.model.rest.request.MessageSendRequest;
 import com.nichamita.sprsrv.model.rest.request.RestRequest;
 
@@ -11,7 +12,8 @@ import dev.mccue.json.Json;
 public final class RestRequestSerializationUtil {
 
     private static final Map<Class<? extends RestRequest>, JsonDeserializer<? extends RestRequest>> deserializers = Map.ofEntries(
-        Map.entry(MessageSendRequest.class, MessageSendRequestSerializer::deserialize)
+        Map.entry(MessageSendRequest.class, MessageSendRequestSerializer::deserialize),
+        Map.entry(LoginRequest.class, LoginRequestSerializer::deserialize)
     );
     
     private RestRequestSerializationUtil() {}

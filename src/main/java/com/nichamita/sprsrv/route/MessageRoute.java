@@ -6,10 +6,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nichamita.sprsrv.model.entity.MessageEntity;
+import com.nichamita.sprsrv.model.entity.Message;
 import com.nichamita.sprsrv.model.gateway.event.MessageEvent;
 import com.nichamita.sprsrv.model.rest.request.MessageSendRequest;
 import com.nichamita.sprsrv.service.gateway.GatewayService;
+import com.nichamita.sprsrv.service.snowflake.SnowflakeService;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -23,10 +24,12 @@ public class MessageRoute {
     private static final Logger log = Loggers.getLogger(MessageRoute.class);
 
     private final GatewayService gatewayService;
+    private final SnowflakeService snowflakeService;
 
     @Autowired
-    public MessageRoute(GatewayService gatewayService) {
+    public MessageRoute(GatewayService gatewayService, SnowflakeService snowflakeService) {
         this.gatewayService = gatewayService;
+        this.snowflakeService = snowflakeService;
     }
     
     @PostMapping
@@ -36,7 +39,8 @@ public class MessageRoute {
         if (message.isEmpty()) {
             return Mono.error(new IllegalArgumentException("Message cannot be empty"));
         }
-        MessageEvent messageEvent = new MessageEvent(new MessageEntity(
+        MessageEvent messageEvent = new MessageEvent(new Message(
+            snowflakeService.generateId().longValue(),
             message,
             System.currentTimeMillis(),
             Math.random() > 0.5 ? 1 : 2));
